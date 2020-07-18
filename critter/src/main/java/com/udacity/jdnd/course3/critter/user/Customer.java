@@ -14,14 +14,19 @@ public class Customer extends User implements Serializable {
     @Column
     private String notes;
 
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
     @OneToMany(mappedBy = "customer")
     private Set<Pet> pets;
 
     public Customer(long id, @NotNull String name, String phoneNumber, String notes, Set<Pet> pets) {
 
-        super(id, name, phoneNumber);
+        super(id, name);
+
         this.notes = notes;
         this.pets = pets;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getNotes() {
@@ -38,5 +43,13 @@ public class Customer extends User implements Serializable {
 
     public void setPets(Set<Pet> pets) {
         this.pets = pets;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
