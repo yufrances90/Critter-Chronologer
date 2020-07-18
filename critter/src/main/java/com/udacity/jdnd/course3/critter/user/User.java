@@ -4,8 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "users")
+@MappedSuperclass
 public class User implements Serializable {
 
     @Id
@@ -20,14 +19,15 @@ public class User implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @OneToOne(mappedBy = "user")
-    private Customer customer;
+    public User(long id, @NotNull String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-    public User(long id, @NotNull String name, String phoneNumber, Customer customer) {
+    public User(long id, @NotNull String name, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.customer = customer;
     }
 
     public String getName() {

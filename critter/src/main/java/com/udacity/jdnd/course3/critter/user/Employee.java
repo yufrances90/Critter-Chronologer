@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="employees")
-public class Employee implements Serializable {
+public class Employee extends User implements Serializable {
 
     @ElementCollection(targetClass = EmployeeSkill.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -21,7 +21,12 @@ public class Employee implements Serializable {
     @Column(name = "day_available")
     private Set<DayOfWeek> daysAvalable;
 
-    public Employee(Set<EmployeeSkill> employeeSkillSet, Set<DayOfWeek> daysAvalable) {
+    public Employee(
+            long id, String name,
+            Set<EmployeeSkill> employeeSkillSet, Set<DayOfWeek> daysAvalable) {
+
+        super(id, name);
+
         this.employeeSkillSet = employeeSkillSet;
         this.daysAvalable = daysAvalable;
     }
