@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.user.Customer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,13 @@ public class Pet {
     @JoinColumn(name="customer_id", nullable=false)
     private Customer customer;
 
-    @ManyToMany(mappedBy = "pets")
+    @ManyToMany(
+            mappedBy = "pets",
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+            }
+    )
     private List<Schedule> schedules;
 
     public Pet() {
@@ -120,5 +127,14 @@ public class Pet {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public void addSchedule(Schedule schedule) {
+
+        if (this.schedules == null) {
+            this.schedules = new ArrayList<>();
+        }
+
+        this.schedules.add(schedule);
     }
 }

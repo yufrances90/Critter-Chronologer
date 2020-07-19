@@ -28,19 +28,28 @@ public class Schedule {
     @Column(name="activity")
     private Set<EmployeeSkill> activities;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(
             name = "pet_schedule",
             joinColumns = @JoinColumn(name = "schedule_id"),
             inverseJoinColumns = @JoinColumn(name = "pet_id"))
     private List<Pet> pets;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(
             name = "employee_schedule",
             joinColumns = @JoinColumn(name = "schedule_id"),
             inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
+
+    public Schedule() {
+    }
 
     public Schedule(long id, LocalDate date, Set<EmployeeSkill> activities) {
         this.id = id;

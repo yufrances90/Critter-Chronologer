@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.schedule.Schedule;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,7 +30,13 @@ public class Employee extends User {
     @Column(name="day")
     private Set<DayOfWeek> daysAvailable;
 
-    @ManyToMany(mappedBy = "employees")
+    @ManyToMany(
+            mappedBy = "employees",
+            cascade = {
+                CascadeType.PERSIST,
+                CascadeType.MERGE
+        }
+    )
     private List<Schedule> schedules;
 
     public Employee() {
@@ -77,5 +84,14 @@ public class Employee extends User {
 
     public void setSchedules(List<Schedule> schedules) {
         this.schedules = schedules;
+    }
+
+    public void addSchedule(Schedule schedule) {
+
+        if (this.schedules == null) {
+            this.schedules = new ArrayList<>();
+        }
+
+        this.schedules.add(schedule);
     }
 }
