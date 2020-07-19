@@ -5,6 +5,7 @@ import com.udacity.jdnd.course3.critter.pet.Pet;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,13 @@ public class Customer extends User {
 
     @OneToMany(mappedBy = "customer")
     private List<Pet> pets;
+
+    public Customer(String name, String phoneNumber, String notes) {
+        super(name);
+
+        this.phoneNumber = phoneNumber;
+        this.notes = notes;
+    }
 
     public Customer(long id, String name) {
         super(id, name);
@@ -61,7 +69,13 @@ public class Customer extends User {
     }
 
     public void addNewPet(Pet pet) {
+
+        if (this.pets == null) {
+             this.pets = new ArrayList<>();
+        }
+
         this.pets.add(pet);
+
         pet.setCustomer(this);
     }
 }
