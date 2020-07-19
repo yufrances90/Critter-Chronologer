@@ -1,11 +1,13 @@
 package com.udacity.jdnd.course3.critter.user;
 
 import com.udacity.jdnd.course3.critter.pet.Pet;
+import com.udacity.jdnd.course3.critter.pet.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,6 +16,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private PetRepository petRepository;
 
     public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
 
@@ -52,5 +57,31 @@ public class CustomerService {
 
             return customerDTO;
         }).collect(Collectors.toList());
+    }
+
+    public CustomerDTO getOwnerByPet(long petId) {
+
+        Optional<Pet> optionalPet = this.petRepository.findById(petId);
+
+        if (optionalPet.isPresent()) {
+
+            Pet pet = optionalPet.get();
+
+            Customer customer = pet.getCustomer();
+
+            CustomerDTO customerDTO = new CustomerDTO();
+
+            customerDTO.setPetIds(
+                    customer.getPets().stream().map(
+                            pet1 -> pet1.getId()).collect(Collectors.toList()));
+            customerDTO.setNotes(customer.getNotes());
+            customerDTO.setPhoneNumber(customer.getPhoneNumber());
+            customerDTO.setName(customer.getName());
+            customerDTO.setId(customer.getId());
+
+            return customerDTO;
+        }
+
+        return null;
     }
 }
