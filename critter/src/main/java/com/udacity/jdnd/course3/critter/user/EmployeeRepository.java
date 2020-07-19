@@ -15,8 +15,9 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
 
     @Query(
             value = "SELECT * FROM Employees e " +
-                    "LEFT JOIN employee_days_available eda on eda.employee_id = e.id " +
-                    "LEFT JOIN employee_skills es on es.employee_id = e.id " +
+                    "INNER JOIN employee_days_available eda on eda" +
+                    ".employee_id = e.id " +
+                    "INNER JOIN employee_skills es on es.employee_id = e.id " +
                     "WHERE eda.day IN :daysAvailable AND es.skill IN " +
                     ":employeeSkills",
             nativeQuery = true
