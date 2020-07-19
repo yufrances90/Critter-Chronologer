@@ -29,6 +29,9 @@ public class Pet {
     @ManyToMany(mappedBy = "pets")
     private List<Schedule> schedules;
 
+    public Pet() {
+    }
+
     public Pet(PetType type, String name, LocalDate birthDate, String notes) {
         this.type = type;
         this.name = name;
