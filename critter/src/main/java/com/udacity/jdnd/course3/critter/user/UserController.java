@@ -20,6 +20,9 @@ public class UserController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private EmployeeService employeeService;
+
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         return this.customerService.saveCustomer(customerDTO);
@@ -37,12 +40,12 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        return this.employeeService.saveEmployee(employeeDTO);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return this.employeeService.getEmployee(employeeId);
     }
 
     @PutMapping("/employee/{employeeId}")

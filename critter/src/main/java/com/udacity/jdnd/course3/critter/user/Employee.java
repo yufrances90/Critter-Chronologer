@@ -32,8 +32,11 @@ public class Employee extends User {
     @ManyToMany(mappedBy = "employees")
     private List<Schedule> schedules;
 
-    public Employee(long id, String name) {
-        super(id, name);
+    public Employee(String name, Set<EmployeeSkill> skills) {
+
+        super(name);
+
+        this.skills = skills;
     }
 
     public Employee(long id, String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable) {
