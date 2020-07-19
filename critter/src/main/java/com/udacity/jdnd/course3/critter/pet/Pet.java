@@ -1,9 +1,11 @@
 package com.udacity.jdnd.course3.critter.pet;
 
+import com.udacity.jdnd.course3.critter.schedule.Schedule;
 import com.udacity.jdnd.course3.critter.user.Customer;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "pets")
@@ -24,6 +26,9 @@ public class Pet {
     @JoinColumn(name="customer_id", nullable=false)
     private Customer customer;
 
+    @ManyToMany(mappedBy = "pets")
+    private List<Schedule> schedules;
+
     public Pet(long id, PetType type, String name, LocalDate birthDate, String notes) {
         this.id = id;
         this.type = type;
@@ -39,6 +44,16 @@ public class Pet {
         this.birthDate = birthDate;
         this.notes = notes;
         this.customer = customer;
+    }
+
+    public Pet(long id, PetType type, String name, LocalDate birthDate, String notes, Customer customer, List<Schedule> schedules) {
+        this.id = id;
+        this.type = type;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.notes = notes;
+        this.customer = customer;
+        this.schedules = schedules;
     }
 
     public long getId() {
@@ -87,5 +102,13 @@ public class Pet {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 }
