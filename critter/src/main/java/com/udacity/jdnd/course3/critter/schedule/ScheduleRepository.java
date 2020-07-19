@@ -21,4 +21,13 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
                     "ON ps.schedule_id = s.id WHERE ps.pet_id = :petId",
             nativeQuery = true)
     List<Schedule> findAllByPetId(@Param("petId") Long petId);
+
+    @Query(value =
+            "SELECT * FROM schedules s " +
+                    "INNER JOIN pet_schedule ps " +
+                    "ON ps.schedule_id = s.id " +
+                    "INNER JOIN pets p ON p.id = ps.pet_id " +
+                    "WHERE p.customer_id = :customerId",
+            nativeQuery = true)
+    List<Schedule> findAllByCustomerId(@Param("customerId") Long customerId);
 }

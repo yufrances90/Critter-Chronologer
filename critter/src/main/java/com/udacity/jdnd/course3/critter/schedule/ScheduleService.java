@@ -115,4 +115,23 @@ public class ScheduleService {
             return scheduleDTO;
         }).collect(Collectors.toList());
     }
+
+    public List<ScheduleDTO> getScheduleForCustomer(long customerId) {
+
+        return this.scheduleRepository.findAllByCustomerId(customerId).stream().map(schedule -> {
+
+            ScheduleDTO scheduleDTO = new ScheduleDTO();
+
+            scheduleDTO.setId(schedule.getId());
+            scheduleDTO.setDate(schedule.getDate());
+            scheduleDTO.setActivities(schedule.getActivities());
+
+            scheduleDTO.setPetIds(schedule.getPets().stream().map(Pet::getId)
+                    .collect(Collectors.toList()));
+            scheduleDTO.setEmployeeIds(schedule.getEmployees().stream()
+                    .map(Employee::getId).collect(Collectors.toList()));
+
+            return scheduleDTO;
+        }).collect(Collectors.toList());
+    }
 }
