@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -39,5 +41,20 @@ public class EmployeeService {
         employeeDTO.setSkills(employee.getSkills());
 
         return employeeDTO;
+    }
+
+    public void setAvailability(Set<DayOfWeek> daysAvailable, long employeeId) {
+
+        Optional<Employee> optionalEmployee =
+                this.employeeRepository.findById(employeeId);
+
+        if (optionalEmployee.isPresent()) {
+
+            Employee employee = optionalEmployee.get();
+
+            employee.setDaysAvailable(daysAvailable);
+
+            this.employeeRepository.save(employee);
+        }
     }
 }
