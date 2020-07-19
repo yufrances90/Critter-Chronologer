@@ -27,12 +27,12 @@ public class ScheduleController {
 
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return this.scheduleService.getScheduleForPet(petId);
     }
 
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return this.scheduleService.getScheduleForEmployee(employeeId);
     }
 
     @GetMapping("/customer/{customerId}")
