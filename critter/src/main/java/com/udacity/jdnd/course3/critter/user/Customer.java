@@ -17,7 +17,7 @@ public class Customer extends User {
     public Customer(long id, String name, String phoneNumber, String notes) {
 
         super(id, name);
-        
+
         this.phoneNumber = phoneNumber;
         this.notes = notes;
     }
