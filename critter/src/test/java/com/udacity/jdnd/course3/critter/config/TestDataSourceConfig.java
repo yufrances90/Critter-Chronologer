@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,40 +19,17 @@ public class TestDataSourceConfig {
 
     @Bean
     @Primary
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource getDataSourceForTest(DataSourceProperties properties) {
 
         DataSourceBuilder dsb = DataSourceBuilder.create();
 
-        dsb.url("jdbc:h2:mem:testdb");
+        dsb.url(properties.getUrl());
+        dsb.driverClassName(properties.getDriverClassName());
+        dsb.password(properties.getPassword());
+        dsb.username(properties.getUsername());
 
         return dsb.build();
-    }
-
-    @Bean
-    SessionFactory sessionFactoryBean(DataSource dataSource) {
-
-        LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(
-                dataSource);
-        sessionBuilder.addProperties(getHibernateProperties());
-        return sessionBuilder.buildSessionFactory();
-    }
-
-    private Properties getHibernateProperties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect",
-                "org.hibernate.dialect.H2Dialect");
-        return properties;
-    }
-
-    @Bean
-    HibernateTransactionManager transactionManager(SessionFactory lsfb) {
-        HibernateTransactionManager mgr = new HibernateTransactionManager();
-        mgr.setSessionFactory(lsfb);
-        return mgr;
-    }
-
-    private String securePasswordService() {
-        return "sa1234";
     }
 }
 
