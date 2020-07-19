@@ -1,14 +1,14 @@
 package com.udacity.jdnd.course3.critter.user;
 
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -36,7 +36,13 @@ public class EmployeeService {
 
     public EmployeeDTO getEmployee(long id) {
 
-        Employee employee = this.employeeRepository.getOne(id);
+        Optional<Employee> optionalEmployee = this.employeeRepository.findById(id);
+
+        if(!optionalEmployee.isPresent()) {
+            return null;
+        }
+
+        Employee employee = optionalEmployee.get();
 
         EmployeeDTO employeeDTO = new EmployeeDTO();
 
@@ -68,8 +74,22 @@ public class EmployeeService {
         LocalDate localDate = employeeRequestDTO.getDate();
         Set<EmployeeSkill> employeeSkills = employeeRequestDTO.getSkills();
 
-        this.employeeRepository.findAll();
+        Set<String> dayOfWeeks =
+                Sets.newHashSet(localDate.getDayOfWeek().name());
 
-        return null;
+        Set<String> employeeSkillSet =
+                employeeSkills.stream().map(EmployeeSkill::name).collect(Collectors.toSet());
+
+        return this.employeeRepository.findAllBySkillsAndDaysAvailable(dayOfWeeks, employeeSkillSet).stream().map(employee -> {
+
+            EmployeeDTO employeeDTO = new EmployeeDTO();
+
+            employeeDTO.setSkills(employee.getSkills());
+            employeeDTO.setDaysAvailable(employee.getDaysAvailable());
+            employeeDTO.setName(employee.getName());
+            employeeDTO.setId(employee.getId());
+
+            return employeeDTO;
+        }).collect(Collectors.toList());
     }
 }

@@ -32,6 +32,9 @@ public class Employee extends User {
     @ManyToMany(mappedBy = "employees")
     private List<Schedule> schedules;
 
+    public Employee() {
+    }
+
     public Employee(String name, Set<EmployeeSkill> skills) {
 
         super(name);
@@ -45,8 +48,8 @@ public class Employee extends User {
         this.daysAvailable = daysAvailable;
     }
 
-    public Employee(long id, String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable, List<Schedule> schedules) {
-        super(id, name);
+    public Employee(String name, Set<EmployeeSkill> skills, Set<DayOfWeek> daysAvailable, List<Schedule> schedules) {
+        super(name);
         this.skills = skills;
         this.daysAvailable = daysAvailable;
         this.schedules = schedules;
