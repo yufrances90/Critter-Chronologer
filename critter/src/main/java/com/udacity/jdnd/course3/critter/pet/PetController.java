@@ -27,7 +27,7 @@ public class PetController {
 
     @GetMapping
     public List<PetDTO> getPets(){
-        throw new UnsupportedOperationException();
+        return this.petService.getPets();
     }
 
     @GetMapping("/owner/{ownerId}")

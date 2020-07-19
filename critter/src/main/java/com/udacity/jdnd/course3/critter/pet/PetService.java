@@ -86,4 +86,20 @@ public class PetService {
             return petDTO;
         }).collect(Collectors.toList());
     }
+
+    public List<PetDTO> getPets() {
+        return this.petRepository.findAll().stream().map(pet -> {
+
+            PetDTO petDTO = new PetDTO();
+
+            petDTO.setNotes(pet.getNotes());
+            petDTO.setBirthDate(pet.getBirthDate());
+            petDTO.setType(pet.getType());
+            petDTO.setName(pet.getName());
+            petDTO.setOwnerId(pet.getCustomer().getId());
+            petDTO.setId(pet.getId());
+
+            return petDTO;
+        }).collect(Collectors.toList());
+    }
 }

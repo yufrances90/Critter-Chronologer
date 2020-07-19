@@ -18,6 +18,9 @@ public class Customer extends User {
     @OneToMany(mappedBy = "customer")
     private List<Pet> pets;
 
+    public Customer() {
+    }
+
     public Customer(String name, String phoneNumber, String notes) {
         super(name);
 
