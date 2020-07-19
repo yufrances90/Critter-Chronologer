@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-@DataJpaTest()
+@DataJpaTest
 @RunWith(SpringRunner.class)
 public class CustomerRepositoryTests {
 
