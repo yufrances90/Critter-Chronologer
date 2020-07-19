@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -19,8 +21,11 @@ public class EmployeeService {
 
         String name = employeeDTO.getName();
         Set<EmployeeSkill> skills = employeeDTO.getSkills();
+        Set<DayOfWeek> dayOfWeeks = employeeDTO.getDaysAvailable();
 
         Employee employee = new Employee(name, skills);
+
+        employee.setDaysAvailable(dayOfWeeks);
 
         Employee savedEmployee =  this.employeeRepository.save(employee);
 
@@ -56,5 +61,15 @@ public class EmployeeService {
 
             this.employeeRepository.save(employee);
         }
+    }
+
+    public List<EmployeeDTO> findEmployeesForService(EmployeeRequestDTO employeeRequestDTO) {
+
+        LocalDate localDate = employeeRequestDTO.getDate();
+        Set<EmployeeSkill> employeeSkills = employeeRequestDTO.getSkills();
+
+        this.employeeRepository.findAll();
+
+        return null;
     }
 }
