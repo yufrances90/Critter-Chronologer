@@ -80,7 +80,9 @@ public class EmployeeService {
         Set<String> employeeSkillSet =
                 employeeSkills.stream().map(EmployeeSkill::name).collect(Collectors.toSet());
 
-        return this.employeeRepository.findAllBySkillsAndDaysAvailable(dayOfWeeks, employeeSkillSet).stream().map(employee -> {
+        return this.employeeRepository.findAllBySkillsAndDaysAvailable(dayOfWeeks, employeeSkillSet).stream().
+                filter(employee -> employee.getSkills().containsAll(employeeSkills))
+                .map(employee -> {
 
             EmployeeDTO employeeDTO = new EmployeeDTO();
 
