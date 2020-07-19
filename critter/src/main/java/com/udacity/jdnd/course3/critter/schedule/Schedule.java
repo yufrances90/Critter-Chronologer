@@ -28,10 +28,7 @@ public class Schedule {
     @Column(name="activity")
     private Set<EmployeeSkill> activities;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany
     @JoinTable(
             name = "pet_schedule",
             joinColumns = @JoinColumn(name = "schedule_id"),

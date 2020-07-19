@@ -42,17 +42,18 @@ public class ScheduleService {
 
         Schedule savedSchedule = this.scheduleRepository.save(schedule);
 
-        pets.forEach(pet -> {
+        pets.stream().forEach(pet -> {
+
             pet.addSchedule(savedSchedule);
+
+            this.petRepository.save(pet);
         });
 
-        this.petRepository.saveAll(pets);
 
         employees.forEach(employee -> {
             employee.addSchedule(savedSchedule);
+            this.employeeRepository.save(employee);
         });
-
-        this.employeeRepository.saveAll(employees);
 
         scheduleDTO.setId(savedSchedule.getId());
 

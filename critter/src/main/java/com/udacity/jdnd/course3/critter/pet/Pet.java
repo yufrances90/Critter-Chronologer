@@ -28,11 +28,7 @@ public class Pet {
     private Customer customer;
 
     @ManyToMany(
-            mappedBy = "pets",
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            }
+            mappedBy = "pets"
     )
     private List<Schedule> schedules;
 

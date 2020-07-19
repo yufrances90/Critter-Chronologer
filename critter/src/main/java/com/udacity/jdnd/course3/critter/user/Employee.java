@@ -31,11 +31,7 @@ public class Employee extends User {
     private Set<DayOfWeek> daysAvailable;
 
     @ManyToMany(
-            mappedBy = "employees",
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-        }
+            mappedBy = "employees"
     )
     private List<Schedule> schedules;
 
